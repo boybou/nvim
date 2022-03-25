@@ -1,9 +1,13 @@
 call plug#begin()
+
 Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'numToStr/Comment.nvim'
+" Plug 'numToStr/Comment.nvim'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+
+Plug 'tpope/vim-commentary'
 Plug 'rose-pine/neovim'
 Plug  'tpope/vim-fugitive' 
 Plug 'vim-airline/vim-airline'
@@ -13,14 +17,17 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-surround'
 Plug 'psliwka/vim-smoothie'
 Plug 'jiangmiao/auto-pairs'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 call plug#end()
 let g:smoothie_update_interval =10 
 let g:smoothie_speed_constant_factor = 100
+set scrolloff=5
+" set cursorline=true
 
 colorscheme rose-pine
 
-lua require('Comment').setup()
+" lua require('Comment').setup()
 
 lua require('telescope').setup{defaults = {file_ignore_patterns = { "node_modules" }}}
 if !exists('g:airline_symbols')
@@ -29,11 +36,13 @@ endif
 let g:airline_symbols.linenr = ''
      
 let mapleader = ";"
+nnoremap <esc><esc> :noh<return>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-"nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+tnoremap <Esc> <C-\><C-n>
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 "nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 "nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 "nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
@@ -210,3 +219,21 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  context_commentstring = {
+    enable = true
+  },
+  highlight = {
+    enable = true,
+    disable = { "lua" }
+  },
+  indent = {
+    enable = true
+  }
+}
+
+EOF
