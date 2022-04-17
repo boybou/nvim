@@ -7,5 +7,10 @@
     "javascript",
     "typescriptreact",
     "typescript"
-  ]
+  ],
+  "tsserver.trace.server": "verbose",
+  "tsserver.log": "verbose",
+	"typescript.autoClosingTags": true
+
+	 // "javascript.validate.enable": false
 }
