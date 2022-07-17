@@ -1,5 +1,6 @@
 call plug#begin()
 
+Plug 'terryma/vim-multiple-cursors'
 Plug 'neoclide/jsonc.vim'
 Plug 'preservim/nerdtree'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -22,7 +23,12 @@ Plug 'psliwka/vim-smoothie'
 Plug 'jiangmiao/auto-pairs'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
+
+
 call plug#end()
+
+command! -nargs=0 Tsc :call CocAction('runCommand', 'tsserver.watchBuild')
+
 let g:smoothie_update_interval =10 
 let g:smoothie_speed_constant_factor = 100
 set scrolloff=5
